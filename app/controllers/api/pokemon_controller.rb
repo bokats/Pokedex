@@ -12,15 +12,16 @@ class Api::PokemonController < ApplicationController
   def create
     @pokemon = Pokemon.new(pokemon_params)
     if @pokemon.save
-      redirect_to api_pokemon(@pokemon)
+      render :show
     else
       flash.now[:errors] = @pokemon.errors.full_messages
+      render :index
     end
   end
 
   private
 
   def pokemon_params
-    params.require(:pokemon).permit(:name, :image_url, :defense, :attack, :moves)
+    params.require(:pokemon).permit(:name, :image_url, :defense, :attack, :moves, :poke_type)
   end
 end
